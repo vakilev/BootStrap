@@ -9,6 +9,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
@@ -28,15 +31,20 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(name = "firstname")
+    @Pattern(regexp = "[A-Za-z]{1,102}", message = "Name should be between 1 and 102 latin characters")
     private String firstName;
 
     @Column(name = "lastname")
+    @Pattern(regexp = "[A-Za-z]{1,102}", message = "Name should be between 1 and 102 latin characters")
     private String lastName;
 
     @Column(name = "age")
+    @Min(value = 0, message = "Age should be >= 0")
+    @Max(value = 127, message = "Age should be < 128")
     private int age;
 
     @Column(name = "email")
+    @Pattern(regexp = "([A-z0-9_.-]+)@([A-z0-9_.-]+).([A-z]{2,8})", message = "Enter correct email")
     private String username;
 
     @Column(name = "password")

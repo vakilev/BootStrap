@@ -28,8 +28,9 @@ public class MainController {
         User admin = userService.findByEmail(principal.getName());
         model.addAttribute("admin", admin);
         List<User> users = userService.findAll();
+        Set<Role> roles = roleService.findAll();
         model.addAttribute("users", users);
-        model.addAttribute("roles", roleService.findAll());
+        model.addAttribute("roles", roles);
 
         return "admin-panel";
     }
@@ -49,7 +50,7 @@ public class MainController {
     }
 
     @PatchMapping("/admin/updateUser/{id}")
-    public String updateUser(User user, @RequestParam("roles") Set<Role> roles) {
+    public String updateUser(User user, @RequestParam(required=false, name = "roles") Set<Role> roles) {
         user.setRoleSet(roles);
         userService.saveUser(user);
         return "redirect:/admin-panel";
