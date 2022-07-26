@@ -13,17 +13,18 @@ import java.util.List;
 import java.util.Set;
 
 @Controller
-public class MainController {
+@RequestMapping(value = "/admin")
+public class AdminController {
 
     private UserService userService;
     private RoleService roleService;
 
-    public MainController(UserService userService, RoleService roleService) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
     }
 
-    @GetMapping("/admin-panel")
+    @GetMapping()
     public String adminInfo(Principal principal, Model model, @ModelAttribute("newUser") User user) {
         User admin = userService.findByEmail(principal.getName());
         model.addAttribute("admin", admin);
@@ -31,28 +32,27 @@ public class MainController {
         Set<Role> roles = roleService.findAll();
         model.addAttribute("users", users);
         model.addAttribute("roles", roles);
-
-        return "admin-panel";
+        return "admin";
     }
 
-    @PostMapping("/admin/addUser")
+    @PostMapping("/addUser")
     public String addUser(@ModelAttribute("newUser") User user,
                           @RequestParam("roles") Set<Role> roles) {
         user.setRoleSet(roles);
         userService.saveUser(user);
-        return "redirect:/admin-panel";
+        return "redirect:/admin";
     }
 
-    @DeleteMapping("/admin/deleteUser/{id}")
+    @DeleteMapping("/deleteUser/{id}")
     public String delete(@PathVariable("id") long id) {
         userService.deleteById(id);
-        return "redirect:/admin-panel";
+        return "redirect:/admin";
     }
 
-    @PatchMapping("/admin/updateUser/{id}")
+    @PatchMapping("/updateUser/{id}")
     public String updateUser(User user, @RequestParam(required=false, name = "roles") Set<Role> roles) {
         user.setRoleSet(roles);
         userService.saveUser(user);
-        return "redirect:/admin-panel";
+        return "redirect:/admin";
     }
 }
