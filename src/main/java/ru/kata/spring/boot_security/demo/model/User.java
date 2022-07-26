@@ -31,11 +31,11 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(name = "firstname")
-    @Pattern(regexp = "[A-Za-z]{1,102}", message = "Name should be between 1 and 102 latin characters")
+    //@Pattern(regexp = "[A-Za-z]{1,102}", message = "Name should be between 1 and 102 latin characters")
     private String firstName;
 
     @Column(name = "lastname")
-    @Pattern(regexp = "[A-Za-z]{1,102}", message = "Name should be between 1 and 102 latin characters")
+    //@Pattern(regexp = "[A-Za-z]{1,102}", message = "Name should be between 1 and 102 latin characters")
     private String lastName;
 
     @Column(name = "age")
@@ -44,7 +44,7 @@ public class User implements UserDetails {
     private int age;
 
     @Column(name = "email")
-    @Pattern(regexp = "([A-z0-9_.-]+)@([A-z0-9_.-]+).([A-z]{2,8})", message = "Enter correct email")
+    //@Pattern(regexp = "([A-z0-9_.-]+)@([A-z0-9_.-]+).([A-z]{2,8})", message = "Enter correct email")
     private String username;
 
     @Column(name = "password")
